@@ -591,6 +591,35 @@
         gap: 1rem;
         align-items: center;
     }
+	.project-scroll-hint {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 8px;
+		margin-top: 15px;
+		color: var(--text-muted);
+		font-size: 0.8rem;
+	}
+
+	.scroll-track {
+		width: 120px;
+		height: 4px;
+		background: var(--bg-secondary);
+		border-radius: 10px;
+		overflow: hidden;
+	}
+
+	.scroll-thumb {
+		width: 35%;
+		height: 100%;
+		background: var(--accent);
+		border-radius: 10px;
+	}
+	@media (min-width: 769px) {
+    .project-scroll-hint {
+        display: none;
+    }
+}
 }
     </style>
 </head>
@@ -768,6 +797,12 @@
                     </div>
                 </div>
             </div>
+			<div class="project-scroll-hint">
+			<span>Swipe to explore more projects</span>
+			<div class="scroll-track">
+				<div class="scroll-thumb"></div>
+			</div>
+		</div>
         </section>
 
         <section id="experience">
