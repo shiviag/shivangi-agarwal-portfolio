@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shivangi Agarwal | Unity, Unreal & XR Software Engineer Portfolio</title>
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #131b2e;
+            --accent: #38bdf8;
+            --accent-hover: #0ea5e9;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #1e293b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--accent);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-main);
+        }
+
+        .hero {
+            padding: 10rem 2rem 3rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+		
+		.hero-photo {
+		width: 250px;
+		height: 250px;
+		border-radius: 50%;
+		object-fit: cover;
+		display: block;
+		margin: 0 auto 1.5rem auto;
+		border: 3px solid var(--accent);
+		box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+	}
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2.5rem auto;
+        }
+
+        .hero-ctas {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #0b0f19;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--bg-secondary);
+            border-color: var(--text-muted);
+        }
+
+        section {
+            padding: 3.5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-card {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .skill-card h3 {
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-list li::before {
+            content: '•';
+            color: var(--accent);
+        }
+
+        /* Projects Interactive Section */
+        .filter-buttons {
+            display: flex;
+            gap: 0.7rem;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-secondary);
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--accent);
+            color: #0b0f19;
+            border-color: var(--accent);
+        }
+
+        .projects-grid {
+			display: flex;
+			flex-wrap: nowrap;
+			gap: 1.5rem;
+
+			overflow-x: auto;
+			overflow-y: hidden;
+
+			padding: 0.5rem 0 1.5rem 0;
+
+			scroll-behavior: smooth;
+			scroll-snap-type: x mandatory;
+		}
+		
+		.projects-grid::-webkit-scrollbar {
+			height: 8px;
+		}
+
+		.projects-grid::-webkit-scrollbar-track {
+			background: var(--bg-secondary);
+			border-radius: 10px;
+		}
+
+		.projects-grid::-webkit-scrollbar-thumb {
+			background: var(--accent);
+			border-radius: 10px;
+		}
+
+		.projects-grid::-webkit-scrollbar-thumb:hover {
+			background: var(--accent-hover);
+		}
+
+        .project-card {
+            background-color: var(--bg-secondary);
+			border: 1px solid var(--border-color);
+			border-radius: 0.5rem;
+
+			padding: 2rem;
+
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+
+			flex: 0 0 340px;
+			min-height: 320px;
+			height: auto;
+
+			scroll-snap-align: start;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .project-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .project-tag {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--accent);
+            font-size: 0.75rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            border: 2px solid var(--bg-primary);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .timeline-role {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .timeline-company {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-bullets {
+            list-style: none;
+        }
+
+        .timeline-bullets li {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        .timeline-bullets li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+
+        /* Contact Details */
+        .contact-container {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-container h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .contact-link:hover {
+            color: var(--accent);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .timeline-header { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            .contact-links { flex-direction: column; gap: 1rem; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="logo"></a>
+            <ul class="nav-links">
+                <li><a href="#about" class="active">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="about" class="hero">
+            <h1>Hi, I'm <span>Shivangi Agarwal</span><br>Gameplay & XR Software Engineer</h1>
+            <img src="images/Shivangi_Photo.jpeg" alt="Shivangi Agarwal" class="hero-photo">
+			<p>Software Engineer with 8+ years of hands-on experience architecting, developing, and optimizing real-time 3D, physics, and gameplay-adjacent systems across mobile, desktop, and AR/VR/MR platforms.</p>
+            <div class="hero-ctas">
+                <a href="#projects" class="btn btn-primary">View Projects</a>
+                <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title">Technical Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Languages & Engines</h3>
+                    <ul class="skill-list">
+                        <li>C#, Swift, Core Java</li>
+                        <li>Unity 3D</li>
+                        <li>Unreal Engine</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Gameplay & Graphics</h3>
+                    <ul class="skill-list">
+                        <li>Physics Simulation</li>
+                        <li>Animation Systems</li>
+                        <li>HDRP / URP Pipelines</li>
+                        <li>Custom Shaders</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Networking & Data</h3>
+                    <ul class="skill-list">
+                        <li>gRPC, WebSockets</li>
+                        <li>TCP/UDP Protocols</li>
+                        <li>REST APIs & JSON</li>
+                        <li>MySQL Database</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Platforms & Tools</h3>
+                    <ul class="skill-list">
+                        <li>iOS & Android Deployment</li>
+                        <li>Microsoft HoloLens</li>
+                        <li>Visual Studio & Xcode</li>
+                        <li>AWS Server Hosting</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title">Key Projects</h2>
+            
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterProjects('all')">All Projects</button>
+                <button class="filter-btn" onclick="filterProjects('ar')">Augmented Reality / Virtual Reality / Mixed Reality</button>
+                <button class="filter-btn" onclick="filterProjects('simulation')">Simulations</button>
+                <button class="filter-btn" onclick="filterProjects('visualizer')">Visualizer</button>
+                <button class="filter-btn" onclick="filterProjects('network')">Multiplayer & Systems</button>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card" data-category="visualizer">
+                    <div>
+                        <div class="project-meta">
+                            <span class="project-date">March 2022 - Present</span>
+                        </div>
+                        <h3>Customer Guidance App</h3>
+                        <p>Developed a Windows-based Unity application to guide aircraft designers while presenting to airline customers. Simulates varying material compositions in closed environments and compiles structural summaries into PDF or machine-readable executive assets.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Unity</span>
+                        <span class="project-tag">C#</span>
+                    </div>
+                </div>
+                <div class="project-card" data-category="ar">
+                    <div>
+                        <div class="project-meta">
+                            <span class="project-date">Feb 2023 - March 2026</span>
+                        </div>
+                        <h3>AR-Based Car Visualizer</h3>
+                        <p>Developed an android and iOS based apps for Showroom dealers enabling real-time 3D vehicle visualization and configuration. The dealers can scan the actual car and project accessories on them while interacting with the end customers. Integrated AR Foundation with ARKit/ARCore in the app along with database mapping, and custom QR configuration-sharing codes.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Unity</span>
+                        <span class="project-tag">C#</span>
+                        <span class="project-tag">AR Foundation</span>
+                        <span class="project-tag">VisionLib</span>
+                    </div>
+                </div>
+
+                    <div class="project-card" data-category="ar">
+                        <div>
+                            <div class="project-meta">
+                                <span class="project-date">Feb 2023 - March 2026</span>
+                            </div>
+                            <h3>AR-Based Car Visualizer</h3>
+                            <p>Developed a POC to visualize the 3D car using Swift programming for iOS devices. It included enabling real-time 3D vehicle visualization and configuration. Integrated AR Foundation with ARKit in the app along with database mapping.</p>
+                    </div>
+                        <div class="project-tags">
+                            <span class="project-tag">Swift</span>
+                            <span class="project-tag">RealityKit</span>
+                            <span class="project-tag">AR Kit</span>
+                        </div>
+                    </div>
+
+                <div class="project-card" data-category="simulation">
+                    <div>
+                        <div class="project-meta">
+                            <span class="project-date">Dec 2020 - Feb 2022</span>
+                        </div>
+                        <h3>3D Simulation for Autonomous Vehicles</h3>
+                        <p>Immersive heavy-vehicle physics behavior platform on uneven terrain. Managed ROS and gRPC-based cross-system synchronization. Developed HDRP/URP vertex/compute shaders to accurately simulate LiDAR sensor streams.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Unity</span>
+                        <span class="project-tag">gRPC</span>
+                        <span class="project-tag">Compute Shaders</span>
+                        <span class="project-tag">ROS</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="network">
+                    <div>
+                        <div class="project-meta">
+                            <span class="project-date">Mar 2020 - Dec 2020</span>
+                        </div>
+                        <h3>Multiplayer Plant Walkthrough</h3>
+                        <p>A client-server spatial walkthrough solution allowing concurrent users to interact and inspect engineering infrastructure in real time. Server components built with WebSockets and fully hosted on AWS pipelines.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">Unity</span>
+                        <span class="project-tag">WebSockets</span>
+                        <span class="project-tag">C# Server</span>
+                        <span class="project-tag">AWS</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-category="ar">
+                    <div>
+                        <div class="project-meta">
+                            <span class="project-date">Jul 2018 - Dec 2020</span>
+                        </div>
+                        <h3>AR Maintenance Suite (Steel Industry)</h3>
+                        <p>Enterprise deployment using HoloLens and Android to assist field engineers with complex industrial repairs via precise, animated 3D guides. Implemented Vuforia, REST APIs, speech recognition, and custom voice controls.</p>
+                    </div>
+                    <div class="project-tags">
+                        <span class="project-tag">HoloLens</span>
+                        <span class="project-tag">Vuforia</span>
+                        <span class="project-tag">REST APIs</span>
+                        <span class="project-tag">Android</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2 class="section-title">Work Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div>
+                            <span class="timeline-role">Software Services Expert</span> — 
+                            <span class="timeline-company">Dassault Systèmes</span>
+                        </div>
+                        <span class="timeline-date">March 2022 – Present</span>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Architected and scaled global-tier Unity applications across mobile ecosystem pipelines (iOS, Android, and Windows).</li>
+                        <li>Designed asset deployment architectures alongside 3D artists to safeguard stable runtime rendering loops.</li>
+                        <li>Pioneered markerless/marker-based AR architectures leveraging AR Foundation frameworks.</li>
+                        <li>Owned submission pipelines across App Store Connect and Google Play Console environments.</li>
+                        <li>Collaborated with aircraft designers to build interactive presentation platforms with automated PDF/image metadata generation.</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-header">
+                        <div>
+                            <span class="timeline-role">Gaming Professional</span> — 
+                            <span class="timeline-company">Automotive Robotics India</span>
+                        </div>
+                        <span class="timeline-date">Dec 2020 – Feb 2022</span>
+                    </div>
+                    <ul class="timeline-bullets">
+                        <li>Built high-fidelity real-time physics engines and terrains simulating severe heavy machinery environments.</li>
+                        <li>Implemented low-latency gRPC protocol configurations to link running engines with external AI pipelines.</li>
+                        <li>Wrote optimized RGB pixel-streaming shaders for computer vision training environments.</li>
+                    </ul>
+                </div>
+                <div class="timeline-item">
+				<div class="timeline-header">
+					<div>
+						<span class="timeline-role">System Engineer</span> —
+						<span class="timeline-company">Tata Consultancy Services Limited</span>
+					</div>
+					<span class="timeline-date">April 2018 – December 2020</span>
+				</div>
+				<ul class="timeline-bullets">
+					<li>Developed enterprise Mixed Reality industrial applications for Microsoft HoloLens, streamlining equipment uptime.</li>
+					<li>Architected cloud-hosted client-server infrastructure on AWS supporting multiplayer plant asset visualization.</li>
+					<li>Wrote clean, highly reusable, modular object-oriented C# code complying with strict engineering design patterns.</li>
+				</ul>
+			</div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-container">
+                <h3>Let's Collaborate on Interactive Systems</h3>
+                <p>Always open to discussing advanced XR environments, engine optimization, or core architecture roles.</p>
+                <div class="contact-links">
+                    <a href="mailto:shivangiag25@gmail.com" class="contact-link">shivangiag25@gmail.com</a>
+                    <a href="tel:+917503364611" class="contact-link">+91 7503364611</a>
+                    <a href="https://linkedin.com/in/shivangi-agarwal-d" target="_blank" class="contact-link">LinkedIn Profile</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Shivangi Agarwal. Crafted independently using direct technical qualifications.</p>
+    </footer>
+
+    <script>
+        function filterProjects(category) {
+            // Update active state of buttons
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Filter elements
+            const cards = document.querySelectorAll('.project-card');
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
