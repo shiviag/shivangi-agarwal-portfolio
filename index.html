@@ -591,7 +591,9 @@
         gap: 1rem;
         align-items: center;
     }
-	.project-scroll-hint {
+}
+
+.project-scroll-hint {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -615,6 +617,8 @@
 		background: var(--accent);
 		border-radius: 10px;
 	}
+	
+	/*Hide the hint on desktop */
 	@media (min-width: 769px) {
     .project-scroll-hint {
         display: none;
