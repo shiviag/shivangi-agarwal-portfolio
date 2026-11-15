@@ -592,36 +592,81 @@
         align-items: center;
     }
 }
+/* Carousel controls - hidden on desktop */
+.carousel-arrow {
+    display: none;
+}
 
-.project-scroll-hint {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 8px;
-		margin-top: 15px;
-		color: var(--text-muted);
-		font-size: 0.8rem;
-	}
+@media (max-width: 768px) {
 
-	.scroll-track {
-		width: 120px;
-		height: 4px;
-		background: var(--bg-secondary);
-		border-radius: 10px;
-		overflow: hidden;
-	}
+    /* Carousel wrapper */
+    .mobile-carousel {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: 100%;
+    }
 
-	.scroll-thumb {
-		width: 35%;
-		height: 100%;
-		background: var(--accent);
-		border-radius: 10px;
-	}
-	
-	/*Hide the hint on desktop */
-	@media (min-width: 769px) {
-    .project-scroll-hint {
-        display: none;
+    /* Left and right buttons */
+    .carousel-arrow {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 38px;
+        background: var(--bg-secondary);
+        color: var(--accent);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Horizontal scrolling tracks */
+    .carousel-track {
+        display: flex !important;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-behavior: smooth;
+        scroll-snap-type: x mandatory;
+        flex: 1;
+        min-width: 0;
+        gap: 1rem;
+        padding-bottom: 12px;
+
+        scrollbar-width: thin;
+        scrollbar-color: var(--accent) var(--bg-secondary);
+    }
+
+    /* Project cards */
+    .projects-grid .project-card {
+        flex: 0 0 85%;
+        min-width: 85%;
+        scroll-snap-align: start;
+    }
+
+    /* Skill cards */
+    .skills-grid .skill-card {
+        flex: 0 0 85%;
+        min-width: 85%;
+        scroll-snap-align: start;
+    }
+
+    /* Chrome, Safari and Edge scrollbar */
+    .carousel-track::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .carousel-track::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+        border-radius: 10px;
+    }
+
+    .carousel-track::-webkit-scrollbar-thumb {
+        background: var(--accent);
+        border-radius: 10px;
     }
 }
 }
@@ -658,8 +703,13 @@
 
         <section id="skills">
             <h2 class="section-title">Technical Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
+			<div class="mobile-carousel">
+    <button class="carousel-arrow" onclick="scrollCarousel(this, -1)" aria-label="Previous skills">
+        &#10094;
+    </button>
+
+    <div class="skills-grid carousel-track">
+       <div class="skill-card">
                     <h3>Languages & Engines</h3>
                     <ul class="skill-list">
                         <li>C#, Swift, Core Java</li>
@@ -694,7 +744,12 @@
                         <li>AWS Server Hosting</li>
                     </ul>
                 </div>
-            </div>
+    </div>
+
+    <button class="carousel-arrow" onclick="scrollCarousel(this, 1)" aria-label="Next skills">
+        &#10095;
+    </button>
+</div>
         </section>
 
         <section id="projects">
@@ -708,8 +763,13 @@
                 <button class="filter-btn" onclick="filterProjects('network')">Multiplayer & Systems</button>
             </div>
 
-            <div class="projects-grid">
-                <div class="project-card" data-category="visualizer">
+            <div class="mobile-carousel">
+			<button class="carousel-arrow" onclick="scrollCarousel(this, -1)" aria-label="Previous projects">
+				&#10094;
+			</button>
+
+			<div class="projects-grid carousel-track">
+				<div class="project-card" data-category="visualizer">
                     <div>
                         <div class="project-meta">
                             <span class="project-date">March 2022 - Present</span>
@@ -801,12 +861,13 @@
                     </div>
                 </div>
             </div>
-			<div class="project-scroll-hint">
-			<span>Swipe to explore more projects</span>
-			<div class="scroll-track">
-				<div class="scroll-thumb"></div>
 			</div>
+
+			<button class="carousel-arrow" onclick="scrollCarousel(this, 1)" aria-label="Next projects">
+				&#10095;
+			</button>
 		</div>
+                
         </section>
 
         <section id="experience">
@@ -936,6 +997,26 @@ window.addEventListener('scroll', () => {
         });
     }
 });
+
+function scrollCarousel(button, direction) {
+    const carousel = button.closest('.mobile-carousel');
+    const track = carousel.querySelector('.carousel-track');
+
+    const card = track.querySelector(
+        '.project-card, .skill-card'
+    );
+
+    if (!card) return;
+
+    const gap = parseFloat(getComputedStyle(track).gap) || 0;
+    const scrollAmount = card.getBoundingClientRect().width + gap;
+
+    track.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+}
+
     </script>
 </body>
 </html>
