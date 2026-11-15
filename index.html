@@ -592,47 +592,29 @@
         align-items: center;
     }
 }
-/* Carousel controls - hidden on desktop */
-.carousel-arrow {
+/* Hide carousel controls on desktop */
+.carousel-controls {
     display: none;
 }
 
 @media (max-width: 768px) {
 
-    /* Carousel wrapper */
     .mobile-carousel {
         display: flex;
-        align-items: center;
-        gap: 8px;
+        flex-direction: column;
+        gap: 12px;
         width: 100%;
     }
 
-    /* Left and right buttons */
-    .carousel-arrow {
-        display: flex;
-        flex-shrink: 0;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 38px;
-        background: var(--bg-secondary);
-        color: var(--accent);
-        border: 1px solid var(--border-color);
-        border-radius: 6px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    /* Horizontal scrolling tracks */
     .carousel-track {
+        width: 100%;
+        min-width: 0;
         display: flex !important;
         flex-wrap: nowrap;
         overflow-x: auto;
         overflow-y: hidden;
         scroll-behavior: smooth;
         scroll-snap-type: x mandatory;
-        flex: 1;
-        min-width: 0;
         gap: 1rem;
         padding-bottom: 12px;
 
@@ -640,21 +622,41 @@
         scrollbar-color: var(--accent) var(--bg-secondary);
     }
 
-    /* Project cards */
-    .projects-grid .project-card {
-        flex: 0 0 85%;
-        min-width: 85%;
-        scroll-snap-align: start;
-    }
-
-    /* Skill cards */
+    .projects-grid .project-card,
     .skills-grid .skill-card {
         flex: 0 0 85%;
         min-width: 85%;
         scroll-snap-align: start;
     }
 
-    /* Chrome, Safari and Edge scrollbar */
+    .carousel-controls {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .carousel-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 36px;
+        background: var(--bg-secondary);
+        color: var(--accent);
+        border: 1px solid var(--border-color);
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+    }
+
+    /* Disabled button appearance */
+    .carousel-arrow:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+    }
+
     .carousel-track::-webkit-scrollbar {
         height: 6px;
     }
@@ -703,10 +705,7 @@
 
         <section id="skills">
             <h2 class="section-title">Technical Expertise</h2>
-			<div class="mobile-carousel">
-    <button class="carousel-arrow" onclick="scrollCarousel(this, -1)" aria-label="Previous skills">
-        &#10094;
-    </button>
+<div class="mobile-carousel">
 
     <div class="skills-grid carousel-track">
        <div class="skill-card">
@@ -746,9 +745,20 @@
                 </div>
     </div>
 
-    <button class="carousel-arrow" onclick="scrollCarousel(this, 1)" aria-label="Next skills">
-        &#10095;
-    </button>
+    <div class="carousel-controls">
+        <button class="carousel-arrow"
+                onclick="scrollCarousel(this, -1)"
+                aria-label="Previous skills">
+            &#10094;
+        </button>
+
+        <button class="carousel-arrow"
+                onclick="scrollCarousel(this, 1)"
+                aria-label="Next skills">
+            &#10095;
+        </button>
+    </div>
+
 </div>
         </section>
 
@@ -764,11 +774,8 @@
             </div>
 
             <div class="mobile-carousel">
-			<button class="carousel-arrow" onclick="scrollCarousel(this, -1)" aria-label="Previous projects">
-				&#10094;
-			</button>
 
-			<div class="projects-grid carousel-track">
+    <div class="projects-grid carousel-track">
 				<div class="project-card" data-category="visualizer">
                     <div>
                         <div class="project-meta">
@@ -863,10 +870,21 @@
             </div>
 			</div>
 
-			<button class="carousel-arrow" onclick="scrollCarousel(this, 1)" aria-label="Next projects">
-				&#10095;
-			</button>
-		</div>
+			<div class="carousel-controls">
+        <button class="carousel-arrow"
+                onclick="scrollCarousel(this, -1)"
+                aria-label="Previous projects">
+            &#10094;
+        </button>
+
+        <button class="carousel-arrow"
+                onclick="scrollCarousel(this, 1)"
+                aria-label="Next projects">
+            &#10095;
+        </button>
+    </div>
+
+</div>
                 
         </section>
 
@@ -951,6 +969,9 @@
                     card.style.display = 'none';
                 }
             });
+			updateCarouselButtons(
+    document.querySelector('#projects .carousel-track')
+);
         }
 		// Navigation active tab handling
 const navLinks = document.querySelectorAll('.nav-links a');
@@ -998,13 +1019,24 @@ window.addEventListener('scroll', () => {
     }
 });
 
+function updateCarouselButtons(track) {
+    const carousel = track.closest('.mobile-carousel');
+    const buttons = carousel.querySelectorAll('.carousel-arrow');
+
+    const atStart = track.scrollLeft <= 1;
+
+    const atEnd =
+        track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+
+    buttons[0].disabled = atStart;
+    buttons[1].disabled = atEnd;
+}
+
 function scrollCarousel(button, direction) {
     const carousel = button.closest('.mobile-carousel');
     const track = carousel.querySelector('.carousel-track');
 
-    const card = track.querySelector(
-        '.project-card, .skill-card'
-    );
+    const card = track.querySelector('.project-card, .skill-card');
 
     if (!card) return;
 
@@ -1016,6 +1048,23 @@ function scrollCarousel(button, direction) {
         behavior: 'smooth'
     });
 }
+
+// Initialize both carousels
+document.querySelectorAll('.carousel-track').forEach(track => {
+
+    track.addEventListener('scroll', () => {
+        updateCarouselButtons(track);
+    });
+
+    updateCarouselButtons(track);
+});
+
+// Update button states when screen size changes
+window.addEventListener('resize', () => {
+    document.querySelectorAll('.carousel-track').forEach(track => {
+        updateCarouselButtons(track);
+    });
+});
 
     </script>
 </body>
